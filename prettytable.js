@@ -1,3 +1,6 @@
+var csv = require('fast-csv');
+var fs = require('fs');
+
 var table = {
     "columnNames": [],
     "rows": [],
@@ -5,22 +8,65 @@ var table = {
 };
 
 exports.fieldNames = function(names) {
+    addTableHeader(names);
+};
+
+exports.add_row = function(row) {
+    addTableRow(names);
+};
+
+exports.toString = function() {
+    return tableToString();
+};
+
+exports.csv = function(filename) {
+    var stream = fs.createReadStream(filename);
+    line_counter = 0;
+    var csvStream = csv()
+        .on("data", function(data){
+            if (line_counter == 0) {
+                addTableHeader(data);
+                line_counter += 1;
+            } else {
+                addTableRow(data);
+                line_counter += 1;
+            }
+        })
+        .on("end", function() {
+            console.log(tableToString());
+        });
+    stream.pipe(csvStream);
+}
+
+exports.print = function() {
+    console.log(this.toString());
+}
+
+var drawLine = function () {
+    arrayLength = 0;
+    for (var i=0; i < table.maxWidth.length; i++) {
+        arrayLength += table.maxWidth[i];
+    }
+    return '+' + Array(arrayLength + table.maxWidth.length * 3).join('-') + '+'
+}
+
+var addTableHeader = function(names) {
     table.columnNames = names;
     for (var i=0; i < names.length; i++) {
         table.maxWidth.push(names[i].length);
     }
-};
+}
 
-exports.add_row = function(row) {
+var addTableRow = function(row) {
     table.rows.push(row);
     for (var i=0; i < row.length; i++) {
         if (row[i].toString().length > table.maxWidth[i]) {
             table.maxWidth[i] = row[i].toString().length;
         }
     }
-};
+}
 
-exports.toString = function() {
+var tableToString = function() {
     finalTable = "";
     columnString = "| ";
     rowString = "";
@@ -53,17 +99,5 @@ exports.toString = function() {
     finalTable += drawLine() + "\n";
     return finalTable;
 };
-
-exports.print = function() {
-    console.log(this.toString());
-}
-
-var drawLine = function () {
-    arrayLength = 0;
-    for (var i=0; i < table.maxWidth.length; i++) {
-        arrayLength += table.maxWidth[i];
-    }
-    return '+' + Array(arrayLength + table.maxWidth.length * 3).join('-') + '+'
-}
 
 exports.version = "0.1";
