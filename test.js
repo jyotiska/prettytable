@@ -14,5 +14,7 @@ a = require('./prettytable.js');
 // a.print();
 // console.log(table);
 
-a.csv("./test.csv");
+// a.csv("./test.csv");
 // a.print();
+
+a.json("./test.json")
