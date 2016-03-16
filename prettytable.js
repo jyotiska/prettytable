@@ -38,8 +38,24 @@ exports.csv = function(filename) {
     stream.pipe(csvStream);
 }
 
+exports.json = function(filename) {
+    var jsondata = JSON.parse(fs.readFileSync(filename, 'utf8'));
+    for (var i=0; i < jsondata.length; i++) {
+        rowKeys = Object.keys(jsondata[i]);
+        rowVals = []
+        for (var k=0; k < rowKeys.length; k++) {
+            rowVals.push(jsondata[i][rowKeys[k]]);
+        }
+        if (table.columnNames.length == 0) {
+            addTableHeader(rowKeys);
+        }
+        addTableRow(rowVals);
+    }
+    console.log(tableToString());
+}
+
 exports.print = function() {
-    console.log(this.toString());
+    console.log(tableToString());
 }
 
 var drawLine = function () {
