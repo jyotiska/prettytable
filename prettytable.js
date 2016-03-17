@@ -58,6 +58,10 @@ exports.print = function() {
     console.log(tableToString());
 }
 
+exports.html = function(attributes) {
+    return tableToHTML(attributes);
+}
+
 var drawLine = function () {
     arrayLength = 0;
     for (var i=0; i < table.maxWidth.length; i++) {
@@ -115,5 +119,42 @@ var tableToString = function() {
     finalTable += drawLine() + "\n";
     return finalTable;
 };
+
+var tableToHTML = function(attributes) {
+    if (typeof attributes == "undefined") {
+        var htmlTable = "<table>";
+    } else {
+        var attributeList = [];
+        for (var key in attributes) {
+            attributeList.push(key + '="' + attributes[key] + '"');
+        }
+        var attributeString = attributeList.join(" ");
+        var htmlTable = "<table " + attributeString + ">";
+    }
+
+    var tableHead = "<thead><tr>";
+    for (var i=0; i < table.columnNames.length; i++) {
+        var headerString = "<th>" + table.columnNames[i] + "</th>";
+        tableHead += headerString;
+    }
+    tableHead += "</tr></thead>";
+    htmlTable += tableHead;
+
+    var tableBody = "<tbody>";
+    for (var i=0; i < table.rows.length; i++) {
+        var rowData = "<tr>";
+        for (var k=0; k < table.rows[i].length; k++) {
+            var cellData = "<td>" + table.rows[i][k] + "</td>";
+            rowData += cellData;
+        }
+        rowData += "</tr>";
+        tableBody += rowData;
+    }
+    tableBody += "</tbody>";
+    htmlTable += tableBody;
+    htmlTable += "</table>";
+
+    return htmlTable;
+}
 
 exports.version = "0.1";
