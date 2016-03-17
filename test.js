@@ -17,4 +17,8 @@ a = require('./prettytable.js');
 // a.csv("./test.csv");
 // a.print();
 
-a.json("./test.json")
+a.json("./test.json");
+var h = a.html(attributes={"name":"my_table", "class":"red_table", "border":"1"});
+var h1 = a.html();
+console.log(h);
+console.log(h1);
