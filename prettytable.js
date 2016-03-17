@@ -9,15 +9,23 @@ var table = {
 
 exports.fieldNames = function(names) {
     addTableHeader(names);
-};
+}
 
 exports.add_row = function(row) {
     addTableRow(names);
-};
+}
 
 exports.toString = function() {
     return tableToString();
-};
+}
+
+exports.print = function() {
+    console.log(tableToString());
+}
+
+exports.html = function(attributes) {
+    return tableToHTML(attributes);
+}
 
 exports.csv = function(filename) {
     var stream = fs.createReadStream(filename);
@@ -52,14 +60,6 @@ exports.json = function(filename) {
         addTableRow(rowVals);
     }
     console.log(tableToString());
-}
-
-exports.print = function() {
-    console.log(tableToString());
-}
-
-exports.html = function(attributes) {
-    return tableToHTML(attributes);
 }
 
 var drawLine = function () {
