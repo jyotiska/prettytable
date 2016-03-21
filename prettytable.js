@@ -14,7 +14,7 @@ exports.fieldNames = function(names) {
 }
 
 // Add a single row to the table
-exports.add_row = function(row) {
+exports.addRow = function(row) {
     addTableRow(row);
 }
 
