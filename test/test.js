@@ -14,10 +14,10 @@ a = require('../prettytable.js');
 // a.print();
 // console.log(table);
 
-// a.csv("./test.csv");
+// a.csv("./test/test.csv");
 // a.print();
 
-a.json("./test.json");
+a.json("./test/test.json");
 // var h = a.html(attributes={"name":"my_table", "class":"red_table", "border":"1"});
 // var h1 = a.html();
 // console.log(h);
