@@ -1,4 +1,4 @@
-a = require('./prettytable.js');
+a = require('../prettytable.js');
 
 // a.fieldNames(["City name", "Area", "Population", "ann"]);
 
