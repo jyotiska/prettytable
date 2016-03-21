@@ -62,6 +62,14 @@ exports.json = function(filename) {
     console.log(tableToString());
 }
 
+exports.sortTable = function(colname, reverse) {
+    var reverseSort = false;
+    if (typeof(reverse) == "boolean" && reverse == true) {
+        reverseSort = true;
+    }
+    sortTableByColumn(colname, reverseSort);
+}
+
 exports.deleteRow = function(rownum) {
     if (rownum <= table.rows.length && rownum > 0) {
         table.rows.splice(rownum-1, 1);
@@ -174,6 +182,23 @@ var tableToHTML = function(attributes) {
     htmlTable += "</table>";
 
     return htmlTable;
+}
+
+var sortTableByColumn = function(colname, reverse) {
+    var colindex = table.columnNames.indexOf(colname);
+
+    function Comparator(a,b){
+        if (reverse == true) {
+            if (a[colindex] < b[colindex]) return 1;
+            if (a[colindex] > b[colindex]) return -1;
+            return 0;
+        } else {
+            if (a[colindex] < b[colindex]) return -1;
+            if (a[colindex] > b[colindex]) return 1;
+            return 0;
+        }
+    }
+    table.rows = table.rows.sort(Comparator);
 }
 
 exports.version = "0.2.0";

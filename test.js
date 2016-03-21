@@ -38,3 +38,9 @@ a.json("./test.json");
 
 // a.deleteTable();
 // a.print();
+
+a.sortTable("age");
+a.print();
+
+a.sortTable("age", true);
+a.print();
