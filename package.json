@@ -1,0 +1,8 @@
+{
+  "name": "prettytable",
+  "version": "0.2.0",
+  "description": "CLI based Node module for generating pretty tables from multiple data sources",
+  "dependencies": {
+    "fast-csv": "latest"
+  }
+}
