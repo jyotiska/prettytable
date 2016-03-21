@@ -18,7 +18,23 @@ a = require('./prettytable.js');
 // a.print();
 
 a.json("./test.json");
-var h = a.html(attributes={"name":"my_table", "class":"red_table", "border":"1"});
-var h1 = a.html();
-console.log(h);
-console.log(h1);
+// var h = a.html(attributes={"name":"my_table", "class":"red_table", "border":"1"});
+// var h1 = a.html();
+// console.log(h);
+// console.log(h1);
+
+// a.deleteRow(2);
+// a.print();
+// a.deleteRow(1);
+// a.print();
+// a.deleteRow(3);
+// a.print();
+
+// a.clearTable();
+// a.print();
+
+// a.add_row(["Darwin", 112, 120900, ]);
+// a.print();
+
+// a.deleteTable();
+// a.print();

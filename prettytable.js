@@ -12,7 +12,7 @@ exports.fieldNames = function(names) {
 }
 
 exports.add_row = function(row) {
-    addTableRow(names);
+    addTableRow(row);
 }
 
 exports.toString = function() {
@@ -62,7 +62,21 @@ exports.json = function(filename) {
     console.log(tableToString());
 }
 
-var drawLine = function () {
+exports.deleteRow = function(rownum) {
+    if (rownum <= table.rows.length && rownum > 0) {
+        table.rows.splice(rownum-1, 1);
+    }
+}
+
+exports.clearTable = function() {
+    table.rows = [];
+}
+
+exports.deleteTable = function() {
+    table = {"columnNames": [], "rows": [], "maxWidth": []};
+}
+
+var drawLine = function() {
     arrayLength = 0;
     for (var i=0; i < table.maxWidth.length; i++) {
         arrayLength += table.maxWidth[i];
@@ -88,6 +102,11 @@ var addTableRow = function(row) {
 
 var tableToString = function() {
     finalTable = "";
+
+    if (table.columnNames.length == 0) {
+        return finalTable;
+    }
+
     columnString = "| ";
     rowString = "";
     for (var i=0; i < table.columnNames.length; i++) {
@@ -157,4 +176,4 @@ var tableToHTML = function(attributes) {
     return htmlTable;
 }
 
-exports.version = "0.1";
+exports.version = "0.2.0";
