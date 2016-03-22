@@ -8,6 +8,17 @@ var table = {
     "maxWidth": []
 };
 
+// Single function to create table when headers and array of rows passed
+exports.create = function(headers, rows) {
+    // Add table headers
+    addTableHeader(headers);
+
+    // Add rows one by one
+    for (var i=0; i < rows.length; i++) {
+        addTableRow(rows[i]);
+    }
+}
+
 // Define list of columns for the table
 exports.fieldNames = function(names) {
     addTableHeader(names);

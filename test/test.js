@@ -17,7 +17,19 @@ a = require('../prettytable.js');
 // a.csv("./test/test.csv");
 // a.print();
 
-a.json("./test/test.json");
+var headers = ["name", "age", "city"];
+
+var rows = [
+        ["john", 22, "new york"],
+        ["elizabeth", 43, "chicago"],
+        ["bill", 31, "atlanta"],
+        ["mary", 18, "los angeles"]
+    ];
+
+a.create(headers, rows);
+a.print();
+
+// a.json("./test/test.json");
 // var h = a.html(attributes={"name":"my_table", "class":"red_table", "border":"1"});
 // var h1 = a.html();
 // console.log(h);
