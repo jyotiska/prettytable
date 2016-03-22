@@ -7,6 +7,6 @@
   "author": "Jyotiska NK <jyotiska123@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "fast-csv": "1.0.0"
+    "csv-parse": "latest"
   }
 }

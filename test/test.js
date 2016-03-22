@@ -1,4 +1,6 @@
-a = require('../prettytable.js');
+PrettyTable = require('../prettytable.js');
+
+a = new PrettyTable();
 
 // a.fieldNames(["City name", "Area", "Population", "ann"]);
 
@@ -14,22 +16,22 @@ a = require('../prettytable.js');
 // a.print();
 // console.log(table);
 
-// a.csv("./test/test.csv");
+a.csv("./test/test.csv");
+a.print();
+// var headers = ["name", "age", "city"];
+
+// var rows = [
+//         ["john", 22, "new york"],
+//         ["elizabeth", 43, "chicago"],
+//         ["bill", 31, "atlanta"],
+//         ["mary", 18, "los angeles"]
+//     ];
+
+// a.create(headers, rows);
 // a.print();
 
-var headers = ["name", "age", "city"];
-
-var rows = [
-        ["john", 22, "new york"],
-        ["elizabeth", 43, "chicago"],
-        ["bill", 31, "atlanta"],
-        ["mary", 18, "los angeles"]
-    ];
-
-a.create(headers, rows);
-a.print();
-
 // a.json("./test/test.json");
+// a.print();
 // var h = a.html(attributes={"name":"my_table", "class":"red_table", "border":"1"});
 // var h1 = a.html();
 // console.log(h);
@@ -51,8 +53,8 @@ a.print();
 // a.deleteTable();
 // a.print();
 
-a.sortTable("age");
-a.print();
+// a.sortTable("age");
+// a.print();
 
-a.sortTable("age", true);
-a.print();
+// a.sortTable("age", true);
+// a.print();

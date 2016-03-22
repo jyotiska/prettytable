@@ -1,173 +1,86 @@
-var csv = require('fast-csv');
+var parse = require('csv-parse/lib/sync');
 var fs = require('fs');
 
-// Skeleton structure of table with list of column names, row and max width of each column element
-var table = {
-    "columnNames": [],
-    "rows": [],
-    "maxWidth": []
-};
-
-// Single function to create table when headers and array of rows passed
-exports.create = function(headers, rows) {
-    // Add table headers
-    addTableHeader(headers);
-
-    // Add rows one by one
-    for (var i=0; i < rows.length; i++) {
-        addTableRow(rows[i]);
-    }
+var PrettyTable = function() {
+    // Skeleton structure of table with list of column names, row and max width of each column element
+    this.table = {
+        "columnNames": [],
+        "rows": [],
+        "maxWidth": []
+    };
 };
 
 // Define list of columns for the table
-exports.fieldNames = function(names) {
-    addTableHeader(names);
+PrettyTable.prototype.fieldNames = function(names) {
+    this.table.columnNames = names;
+    for (var i=0; i < names.length; i++) {
+        this.table.maxWidth.push(names[i].length);
+    }
 };
 
 // Add a single row to the table
-exports.addRow = function(row) {
-    addTableRow(row);
+PrettyTable.prototype.addRow = function(row) {
+    this.table.rows.push(row);
+    for (var i=0; i < row.length; i++) {
+        if (row[i].toString().length > this.table.maxWidth[i]) {
+            this.table.maxWidth[i] = row[i].toString().length;
+        }
+    }
+};
+
+// Single function to create table when headers and array of rows passed
+PrettyTable.prototype.create = function(headers, rows) {
+    // Add table headers
+    this.fieldNames(headers);
+
+    // Add rows one by one
+    for (var i=0; i < rows.length; i++) {
+        this.addRow(rows[i]);
+    }
 };
 
 // Convert the table to string
-exports.toString = function() {
-    return tableToString();
-};
-
-// Write the table string to the console
-exports.print = function() {
-    console.log(tableToString());
-};
-
-// Write the table string to the console as HTML table formats
-exports.html = function(attributes) {
-    return tableToHTML(attributes);
-};
-
-// Create the table from a CSV file
-exports.csv = function(filename) {
-    var stream = fs.createReadStream(filename);
-    line_counter = 0;
-    var csvStream = csv()
-        .on("data", function(data){
-            if (line_counter === 0) {
-                addTableHeader(data);
-                line_counter += 1;
-            } else {
-                addTableRow(data);
-                line_counter += 1;
-            }
-        })
-        .on("end", function() {
-            console.log(tableToString());
-        });
-    stream.pipe(csvStream);
-};
-
-// Create the table from a JSON file
-exports.json = function(filename) {
-    var jsondata = JSON.parse(fs.readFileSync(filename, 'utf8'));
-    for (var i=0; i < jsondata.length; i++) {
-        rowKeys = Object.keys(jsondata[i]);
-        rowVals = [];
-        for (var k=0; k < rowKeys.length; k++) {
-            rowVals.push(jsondata[i][rowKeys[k]]);
+PrettyTable.prototype.toString = function() {
+    // Draw a line based on the max width of each column and return
+    var drawLine = function(table) {
+        arrayLength = 0;
+        for (var i=0; i < table.maxWidth.length; i++) {
+            arrayLength += table.maxWidth[i];
         }
-        if (table.columnNames.length === 0) {
-            addTableHeader(rowKeys);
-        }
-        addTableRow(rowVals);
-    }
-    console.log(tableToString());
-};
+        return '+' + Array(arrayLength + table.maxWidth.length * 3).join('-') + '+';
+    };
 
-// Sort the table given a column in ascending or descending order
-exports.sortTable = function(colname, reverse) {
-    var reverseSort = false;
-    if (typeof(reverse) === "boolean" && reverse === true) {
-        reverseSort = true;
-    }
-    sortTableByColumn(colname, reverseSort);
-};
-
-// Delete a single row from the table given row number
-exports.deleteRow = function(rownum) {
-    if (rownum <= table.rows.length && rownum > 0) {
-        table.rows.splice(rownum-1, 1);
-    }
-};
-
-// Clear the contents from the table, but keep columns and structure
-exports.clearTable = function() {
-    table.rows = [];
-};
-
-// Delete the entire table
-exports.deleteTable = function() {
-    table = {"columnNames": [], "rows": [], "maxWidth": []};
-};
-
-// Draw a line based on the max width of each column and return
-var drawLine = function() {
-    arrayLength = 0;
-    for (var i=0; i < table.maxWidth.length; i++) {
-        arrayLength += table.maxWidth[i];
-    }
-    return '+' + Array(arrayLength + table.maxWidth.length * 3).join('-') + '+';
-};
-
-// Helper method to add column names of the table and add maxwidth for each column element
-var addTableHeader = function(names) {
-    table.columnNames = names;
-    for (var i=0; i < names.length; i++) {
-        table.maxWidth.push(names[i].length);
-    }
-};
-
-// Helper method to add a row to the table and re-adjust max width of each row element
-var addTableRow = function(row) {
-    table.rows.push(row);
-    for (var i=0; i < row.length; i++) {
-        if (row[i].toString().length > table.maxWidth[i]) {
-            table.maxWidth[i] = row[i].toString().length;
-        }
-    }
-};
-
-// Convert the table to string and return
-var tableToString = function() {
-    // Define final table string as empty string
     finalTable = "";
 
     // If no columns present, return empty string
-    if (table.columnNames.length === 0) {
+    if (this.table.columnNames.length === 0) {
         return finalTable;
     }
 
     // Create the table header from column list
     columnString = "| ";
     rowString = "";
-    for (var i=0; i < table.columnNames.length; i++) {
-        columnString += table.columnNames[i];
+    for (var i=0; i < this.table.columnNames.length; i++) {
+        columnString += this.table.columnNames[i];
         // Adjust for max width of the column and pad spaces
-        if (table.columnNames[i].length < table.maxWidth[i]) {
-            lengthDifference = table.maxWidth[i] - table.columnNames[i].length;
+        if (this.table.columnNames[i].length < this.table.maxWidth[i]) {
+            lengthDifference = this.table.maxWidth[i] - this.table.columnNames[i].length;
             columnString += Array(lengthDifference + 1).join(' ');
         }
         columnString += " | ";
     }
-    finalTable += drawLine() + "\n";
+    finalTable += drawLine(this.table) + "\n";
     finalTable += columnString + "\n";
-    finalTable += drawLine() + "\n";
+    finalTable += drawLine(this.table) + "\n";
 
     // Construct the table body
-    for (i=0; i < table.rows.length; i++) {
+    for (i=0; i < this.table.rows.length; i++) {
         var tempRowString = "| ";
-        for (var k=0; k < table.rows[i].length; k++) {
-            tempRowString += table.rows[i][k];
+        for (var k=0; k < this.table.rows[i].length; k++) {
+            tempRowString += this.table.rows[i][k];
             // Adjust max width of each cell and pad spaces as necessary
-            if (table.rows[i][k].toString().length < table.maxWidth[k]) {
-                lengthDifference = table.maxWidth[k] - table.rows[i][k].toString().length;
+            if (this.table.rows[i][k].toString().length < this.table.maxWidth[k]) {
+                lengthDifference = this.table.maxWidth[k] - this.table.rows[i][k].toString().length;
                 tempRowString += Array(lengthDifference + 1).join(' ');
             }
             tempRowString += " | ";
@@ -179,12 +92,17 @@ var tableToString = function() {
     // Append to the final table string
     finalTable += rowString + "\n";
     // Draw last line and return
-    finalTable += drawLine() + "\n";
+    finalTable += drawLine(this.table) + "\n";
     return finalTable;
 };
 
-// Convert the table to HTML table
-var tableToHTML = function(attributes) {
+// Write the table string to the console
+PrettyTable.prototype.print = function() {
+    console.log(this.toString());
+};
+
+// Write the table string to the console as HTML table formats
+PrettyTable.prototype.html = function(attributes) {
     // If attributes provided, add them as inline properties, else create default table tag
     var htmlTable = "";
     if (typeof attributes == "undefined") {
@@ -200,8 +118,8 @@ var tableToHTML = function(attributes) {
 
     // Define the table headers in <thead> from table column list
     var tableHead = "<thead><tr>";
-    for (var i=0; i < table.columnNames.length; i++) {
-        var headerString = "<th>" + table.columnNames[i] + "</th>";
+    for (var i=0; i < this.table.columnNames.length; i++) {
+        var headerString = "<th>" + this.table.columnNames[i] + "</th>";
         tableHead += headerString;
     }
     tableHead += "</tr></thead>";
@@ -209,10 +127,10 @@ var tableToHTML = function(attributes) {
 
     // Construct the table body from the array of rows
     var tableBody = "<tbody>";
-    for (i=0; i < table.rows.length; i++) {
+    for (i=0; i < this.table.rows.length; i++) {
         var rowData = "<tr>";
-        for (var k=0; k < table.rows[i].length; k++) {
-            var cellData = "<td>" + table.rows[i][k] + "</td>";
+        for (var k=0; k < this.table.rows[i].length; k++) {
+            var cellData = "<td>" + this.table.rows[i][k] + "</td>";
             rowData += cellData;
         }
         rowData += "</tr>";
@@ -226,14 +144,48 @@ var tableToHTML = function(attributes) {
     return htmlTable;
 };
 
-// Helper method to sort table given column name
-var sortTableByColumn = function(colname, reverse) {
+// Create the table from a CSV file
+PrettyTable.prototype.csv = function(filename) {
+    var csvdata = fs.readFileSync(filename, 'utf8');
+    var records = parse(csvdata);
+
+    var lineCounter = 0;
+    for (var i=0; i < records.length; i++) {
+        if (lineCounter === 0) {
+            this.fieldNames(records[i]);
+            lineCounter += 1;
+        } else {
+            this.addRow(records[i]);
+            lineCounter += 1;
+        }
+    }
+};
+
+// Create the table from a JSON file
+PrettyTable.prototype.json = function(filename) {
+    var jsondata = JSON.parse(fs.readFileSync(filename, 'utf8'));
+    for (var i=0; i < jsondata.length; i++) {
+        rowKeys = Object.keys(jsondata[i]);
+        rowVals = [];
+        for (var k=0; k < rowKeys.length; k++) {
+            rowVals.push(jsondata[i][rowKeys[k]]);
+        }
+        if (this.table.columnNames.length === 0) {
+            this.fieldNames(rowKeys);
+        }
+        this.addRow(rowVals);
+    }
+    return this.toString();
+};
+
+// Sort the table given a column in ascending or descending order
+PrettyTable.prototype.sortTable = function(colname, reverse) {
     // Find the index of the column given the name
-    var colindex = table.columnNames.indexOf(colname);
+    var colindex = this.table.columnNames.indexOf(colname);
 
     // Comparator method which takes the column index and sort direction
     function Comparator(a,b){
-        if (reverse === true) {
+        if (typeof(reverse) === "boolean" && reverse === true) {
             if (a[colindex] < b[colindex]) return 1;
             if (a[colindex] > b[colindex]) return -1;
             return 0;
@@ -244,7 +196,26 @@ var sortTableByColumn = function(colname, reverse) {
         }
     }
     // Sort array of table rows
-    table.rows = table.rows.sort(Comparator);
+    this.table.rows = this.table.rows.sort(Comparator);
 };
 
-exports.version = "0.3.0";
+// Delete a single row from the table given row number
+PrettyTable.prototype.deleteRow = function(rownum) {
+    if (rownum <= this.table.rows.length && rownum > 0) {
+        this.table.rows.splice(rownum-1, 1);
+    }
+};
+
+// Clear the contents from the table, but keep columns and structure
+PrettyTable.prototype.clearTable = function() {
+    this.table.rows = [];
+};
+
+// Delete the entire table
+PrettyTable.prototype.deleteTable = function() {
+    this.table = {"columnNames": [], "rows": [], "maxWidth": []};
+};
+
+PrettyTable.prototype.version = "0.3.0";
+
+module.exports = PrettyTable;
