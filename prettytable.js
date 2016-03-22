@@ -175,7 +175,6 @@ PrettyTable.prototype.json = function(filename) {
         }
         this.addRow(rowVals);
     }
-    return this.toString();
 };
 
 // Sort the table given a column in ascending or descending order

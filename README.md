@@ -9,7 +9,8 @@ The following snippet shows importing the prettytable module, adding column head
 The `create()` method takes list of headers and array of rows as inputs and creates the table in one shot.
 
 ```javascript
-pt = require('prettytable');
+PrettyTable = require('prettytable');
+pt = new PrettyTable();
 
 var headers = ["name", "age", "city"];
 
@@ -40,7 +41,8 @@ This gives you the following table on console.
 Alternatively, it is possible to add table headers separately and then add rows one by one.
 
 ```javascript
-pt = require('prettytable');
+PrettyTable = require('prettytable');
+pt = new PrettyTable();
 
 pt.fieldNames(["City name", "Area", "Population", "ann"]);
 
@@ -62,8 +64,11 @@ We are using `fieldNames()` method and passing a list of table headers. Method `
 Prettytable can load a local CSV file and print it on the console. It considers the first row to generate table headers.
 
 ```javascript
-pt = require('prettytable');
+PrettyTable = require('prettytable');
+pt = new PrettyTable();
+
 pt.csv("myfile.csv");
+pt.print();
 ```
 
 ### Importing from JSON File
@@ -71,8 +76,11 @@ pt.csv("myfile.csv");
 Like CSV, Prettytable can load a local JSON file, parse through it and finally print it on the console. Table headers are automatically determined from the keys.
 
 ```javascript
-pt = require('prettytable');
+PrettyTable = require('prettytable');
+pt = new PrettyTable();
+
 pt.json("myfile.json");
+pt.print();
 ```
 
 ### Output Formats
@@ -82,7 +90,8 @@ Prettytable can print a table directly to the console, return as a string or pri
 The following example shows returning the table as plain text and then printing to the console.
 
 ```javascript
-pt = require('prettytable');
+PrettyTable = require('prettytable');
+pt = new PrettyTable();
 
 pt.fieldNames(["City name", "Area", "Population", "ann"]);
 
@@ -101,7 +110,8 @@ console.log(tableContent);
 The following example shows generating HTML table. User can also pass different attributes which will be added as inline HTML style.
 
 ```javascript
-pt = require('prettytable');
+PrettyTable = require('prettytable');
+pt = new PrettyTable();
 
 pt.fieldNames(["City name", "Area", "Population", "ann"]);
 
@@ -125,7 +135,8 @@ console.log(styledHTML);
 Prettytable also offers option to sort the table given a column name. Additional parameters can be passed to sort in ascending or descending order. If no parameter is passed, the table will be sorted in ascending order.
 
 ```javascript
-pt = require('prettytable');
+PrettyTable = require('prettytable');
+pt = new PrettyTable();
 
 pt.fieldNames(["name", "age", "city"]);
 
@@ -148,7 +159,8 @@ A single row can be deleted from the table by passing the row number to `deleteR
 The following example shows all 3 of these methods.
 
 ```javascript
-pt = require('prettytable');
+PrettyTable = require('prettytable');
+pt = new PrettyTable();
 
 pt.fieldNames(["name", "age", "city"]);
 
