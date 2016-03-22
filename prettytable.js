@@ -246,4 +246,4 @@ var sortTableByColumn = function(colname, reverse) {
     table.rows = table.rows.sort(Comparator);
 }
 
-exports.version = "0.2.0";
+exports.version = "0.3.0";

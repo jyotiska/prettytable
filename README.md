@@ -169,6 +169,8 @@ pt.deleteTable();
 
 ### Contributing
 
+This project is under active development right now. Subsequent releases may not be compatible with older versions. Please do not use this package in a production environment.
+
 This project is inspired from the Python [prettytable](https://code.google.com/p/prettytable/) module. Contributions in form of bug reports or pull requests is encouraged from users.
 
 ### License
