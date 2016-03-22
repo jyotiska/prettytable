@@ -6,6 +6,26 @@ Prettytable is a CLI based module for printing ASCII tables on the console from 
 
 The following snippet shows importing the prettytable module, adding column headers, adding rows and printing the table.
 
+The `create()` method takes list of headers and array of rows as inputs and creates the table in one shot.
+
+```javascript
+pt = require('prettytable');
+
+var headers = ["name", "age", "city"];
+
+var rows = [
+        ["john", 22, "new york"],
+        ["elizabeth", 43, "chicago"],
+        ["bill", 31, "atlanta"],
+        ["mary", 18, "los angeles"]
+    ];
+
+pt.create(headers, rows);
+pt.print();
+```
+
+Alternatively, it is possible to add table headers separately and then add rows one by one.
+
 ```javascript
 pt = require('prettytable');
 
