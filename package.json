@@ -1,6 +1,7 @@
 {
   "name": "prettytable",
   "version": "0.3.0",
+  "main": "prettytable.js",
   "description": "CLI based Node module for generating pretty tables from multiple data sources",
   "keywords": ["table", "cli table", "csv", "json"],
   "repository": "https://github.com/jyotiska/prettytable",
