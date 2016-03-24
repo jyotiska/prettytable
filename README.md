@@ -1,6 +1,6 @@
-## Prettytable
+## PrettyTable
 
-Prettytable is a CLI based module for printing ASCII tables on the console from multiple data sources. The table can be populated by adding table rows one by one or from a CSV file or from a JSON file. It provides multiple ways of manipulating table data - sorting on a specific column, deleting a particular row or the table itself. The table can be printed as plain text or as a HTML table.
+PrettyTable is a CLI based module for printing ASCII tables on the console from multiple data sources. The table can be populated by adding table rows one by one or from a CSV file or from a JSON file. It provides multiple ways of manipulating table data - sorting on a specific column, deleting a particular row or the table itself. The table can be printed as plain text or as a HTML table.
 
 ### Basic Usage
 
@@ -61,7 +61,7 @@ We are using `fieldNames()` method and passing a list of table headers. Method `
 
 ### Importing from CSV File
 
-Prettytable can load a local CSV file and print it on the console. It considers the first row to generate table headers.
+PrettyTable can load a local CSV file and print it on the console. It considers the first row to generate table headers.
 
 ```javascript
 PrettyTable = require('prettytable');
@@ -73,7 +73,7 @@ pt.print();
 
 ### Importing from JSON File
 
-Like CSV, Prettytable can load a local JSON file, parse through it and finally print it on the console. Table headers are automatically determined from the keys.
+Like CSV, PrettyTable can load a local JSON file, parse through it and finally print it on the console. Table headers are automatically determined from the keys.
 
 ```javascript
 PrettyTable = require('prettytable');
@@ -85,7 +85,7 @@ pt.print();
 
 ### Output Formats
 
-Prettytable can print a table directly to the console, return as a string or print in HTML format.
+PrettyTable can print a table directly to the console, return as a string or print in HTML format.
 
 The following example shows returning the table as plain text and then printing to the console.
 
@@ -132,7 +132,7 @@ console.log(styledHTML);
 
 ### Sorting Table by Column
 
-Prettytable also offers option to sort the table given a column name. Additional parameters can be passed to sort in ascending or descending order. If no parameter is passed, the table will be sorted in ascending order.
+PrettyTable also offers option to sort the table given a column name. Additional parameters can be passed to sort in ascending or descending order. If no parameter is passed, the table will be sorted in ascending order.
 
 ```javascript
 PrettyTable = require('prettytable');
