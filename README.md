@@ -28,14 +28,14 @@ pt.print();
 This gives you the following table on console.
 
 ```
-+-------------------------------+
++-----------+-----+-------------+
 | name      | age | city        |
-+-------------------------------+
++-----------+-----+-------------+
 | john      | 22  | new york    |
 | elizabeth | 43  | chicago     |
 | bill      | 31  | atlanta     |
 | mary      | 18  | los angeles |
-+-------------------------------+
++-----------+-----+-------------+
 ```
 
 Alternatively, it is possible to add table headers separately and then add rows one by one.
