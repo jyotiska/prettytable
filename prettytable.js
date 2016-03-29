@@ -8,7 +8,7 @@ var PrettyTable = function () {
         'rows': [],
         'maxWidth': []
     };
-    this.version = '0.3.0';
+    this.version = '0.3.1';
 };
 
 // Define list of columns for the table
