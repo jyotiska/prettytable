@@ -49,11 +49,11 @@ PrettyTable.prototype.toString = function () {
 
     // Draw a line based on the max width of each column and return
     var drawLine = function (table) {
-        var arrayLength = 0;
+        var finalLine = '+';
         for (var i = 0; i < table.maxWidth.length; i++) {
-            arrayLength += table.maxWidth[i];
+            finalLine += Array(table.maxWidth[i] + 3).join('-') + '+';
         }
-        return '+' + Array(arrayLength + table.maxWidth.length * 3).join('-') + '+';
+        return finalLine;
     };
 
     // If no columns present, return empty string
