@@ -1,4 +1,4 @@
-var parse = require('csv-parse/lib/sync');
+var parse = require('csv-parse/sync');
 var fs = require('fs');
 
 var PrettyTable = function () {
