@@ -189,7 +189,7 @@ PrettyTable.prototype.sortTable = function (colname, reverse) {
     var colindex = this.table.columnNames.indexOf(colname);
 
     // Comparator method which takes the column index and sort direction
-    var Comparator = function ( a, b) {
+    var Comparator = function (a, b) {
         if (typeof reverse === 'boolean' && reverse === true) {
             if (a[colindex] < b[colindex]) {
                 return 1;
@@ -212,7 +212,7 @@ PrettyTable.prototype.sortTable = function (colname, reverse) {
                 return 0;
             }
         }
-    }
+    };
     // Sort array of table rows
     this.table.rows = this.table.rows.sort(Comparator);
 };

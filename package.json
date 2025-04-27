@@ -3,11 +3,31 @@
   "version": "1.0.0",
   "main": "prettytable.js",
   "description": "CLI based Node module for generating pretty tables from multiple data sources",
-  "keywords": ["table", "cli table", "csv", "json"],
-  "repository": "https://github.com/jyotiska/prettytable",
-  "author": "Jyotiska NK <jyotiska123@gmail.com>",
+  "keywords": [
+    "table",
+    "cli table",
+    "csv",
+    "json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jyotiska/prettytable.git"
+  },
+  "author": "Jyotiska Khasnabish <jyotiska123@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node prettytable.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "dependencies": {
-    "csv-parse": "latest"
+    "csv-parse": "^4.16.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
   }
 }
