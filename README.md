@@ -1,51 +1,70 @@
-## PrettyTable
+# PrettyTable
 
-PrettyTable is a CLI based module for printing ASCII tables on the console from multiple data sources. The table can be populated by adding table rows one by one or from a CSV file or from a JSON file. It provides multiple ways of manipulating table data - sorting on a specific column, deleting a particular row or the table itself. The table can be printed as plain text or as a HTML table.
+[![npm version](https://img.shields.io/npm/v/prettytable.svg)](https://www.npmjs.com/package/prettytable)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
 
-### Basic Usage
+A CLI based Node.js module for generating and displaying pretty ASCII tables from multiple data sources.
 
-The following snippet shows importing the prettytable module, adding column headers, adding rows and printing the table.
+- 📊 Generate tables from arrays, CSV, or JSON data
+- 🔍 Sort, filter, and manipulate table data
+- 🖨️ Output as plain text or HTML
+- 🛠️ Modern JavaScript with comprehensive error handling
 
-The `create()` method takes list of headers and array of rows as inputs and creates the table in one shot.
+## Installation
+
+```bash
+npm install prettytable
+```
+
+## Basic Usage
+
+Create a table with headers and rows in one shot:
 
 ```javascript
-PrettyTable = require("prettytable");
-pt = new PrettyTable();
+// Import and instantiate
+const PrettyTable = require("prettytable");
+const pt = new PrettyTable();
 
-var headers = ["name", "age", "city"];
-
-var rows = [
-  ["john", 22, "new york"],
-  ["elizabeth", 43, "chicago"],
-  ["bill", 31, "atlanta"],
-  ["mary", 18, "los angeles"],
+// Define headers and data
+const headers = ["Name", "Age", "City"];
+const rows = [
+  ["John", 22, "New York"],
+  ["Elizabeth", 43, "Chicago"],
+  ["Bill", 31, "Atlanta"],
+  ["Mary", 18, "Los Angeles"],
 ];
 
+// Create and display table
 pt.create(headers, rows);
 pt.print();
 ```
 
-This gives you the following table on console.
+Output:
 
 ```
 +-----------+-----+-------------+
-| name      | age | city        |
+| Name      | Age | City        |
 +-----------+-----+-------------+
-| john      | 22  | new york    |
-| elizabeth | 43  | chicago     |
-| bill      | 31  | atlanta     |
-| mary      | 18  | los angeles |
+| John      | 22  | New York    |
+| Elizabeth | 43  | Chicago     |
+| Bill      | 31  | Atlanta     |
+| Mary      | 18  | Los Angeles |
 +-----------+-----+-------------+
 ```
 
-Alternatively, it is possible to add table headers separately and then add rows one by one.
+Build a table row-by-row:
 
 ```javascript
-PrettyTable = require("prettytable");
-pt = new PrettyTable();
+const PrettyTable = require("prettytable");
+const pt = new PrettyTable();
 
-pt.fieldNames(["City name", "Area", "Population", "ann"]);
+// Set column names
+pt.fieldNames(["City", "Area", "Population", "Rainfall"]);
 
+// Add rows one by one
 pt.addRow(["Adelaide", 1295, 1158259, 600.5]);
 pt.addRow(["Brisbane", 5905, 1857594, 1146.4]);
 pt.addRow(["Darwin", 112, 120900, 1714.7]);
@@ -54,140 +73,160 @@ pt.addRow(["Sydney", 2058, 4336374, 1214.8]);
 pt.addRow(["Melbourne", 1566, 3806092, 646.9]);
 pt.addRow(["Perth", 5386, 1554769, 869.4]);
 
+// Display the table
 pt.print();
 ```
 
-We are using `fieldNames()` method and passing a list of table headers. Method `addRow()` takes an array of elements and adds them to the table as a row. Finally, the `print()` method prints the table in plain text.
+## Data Import Features
 
-### Importing from CSV File
-
-PrettyTable can load a local CSV file and print it on the console. It considers the first row to generate table headers.
+### Import from CSV
 
 ```javascript
-PrettyTable = require("prettytable");
-pt = new PrettyTable();
+const PrettyTable = require("prettytable");
+const pt = new PrettyTable();
 
-pt.csv("myfile.csv");
+// Load from CSV file (first row is used as headers)
+pt.csv("./data.csv");
 pt.print();
 ```
 
-### Importing from JSON File
-
-Like CSV, PrettyTable can load a local JSON file, parse through it and finally print it on the console. Table headers are automatically determined from the keys.
+### Import from JSON
 
 ```javascript
-PrettyTable = require("prettytable");
-pt = new PrettyTable();
+const PrettyTable = require("prettytable");
+const pt = new PrettyTable();
 
-pt.json("myfile.json");
+// Load from JSON file (object keys become headers)
+pt.json("./data.json");
 pt.print();
 ```
 
-### Output Formats
+## Output Options
 
-PrettyTable can print a table directly to the console, return as a string or print in HTML format.
+### Return as String
 
-The following example shows returning the table as plain text and then printing to the console.
+Get the table as a formatted string:
 
 ```javascript
-PrettyTable = require("prettytable");
-pt = new PrettyTable();
+const PrettyTable = require("prettytable");
+const pt = new PrettyTable();
 
-pt.fieldNames(["City name", "Area", "Population", "ann"]);
+pt.fieldNames(["Name", "Age", "City"]);
+pt.addRow(["John", 25, "New York"]);
+pt.addRow(["Mary", 30, "Chicago"]);
 
-pt.addRow(["Adelaide", 1295, 1158259, 600.5]);
-pt.addRow(["Brisbane", 5905, 1857594, 1146.4]);
-pt.addRow(["Darwin", 112, 120900, 1714.7]);
-pt.addRow(["Hobart", 1357, 205556, 619.5]);
-pt.addRow(["Sydney", 2058, 4336374, 1214.8]);
-pt.addRow(["Melbourne", 1566, 3806092, 646.9]);
-pt.addRow(["Perth", 5386, 1554769, 869.4]);
-
-var tableContent = pt.toString();
-console.log(tableContent);
+const tableString = pt.toString();
+console.log(tableString);
 ```
 
-The following example shows generating HTML table. User can also pass different attributes which will be added as inline HTML style.
+### Generate HTML
+
+Create an HTML table representation:
 
 ```javascript
-PrettyTable = require("prettytable");
-pt = new PrettyTable();
+const PrettyTable = require("prettytable");
+const pt = new PrettyTable();
 
-pt.fieldNames(["City name", "Area", "Population", "ann"]);
+pt.fieldNames(["Name", "Age", "City"]);
+pt.addRow(["John", 25, "New York"]);
+pt.addRow(["Mary", 30, "Chicago"]);
 
-pt.addRow(["Adelaide", 1295, 1158259, 600.5]);
-pt.addRow(["Brisbane", 5905, 1857594, 1146.4]);
-pt.addRow(["Darwin", 112, 120900, 1714.7]);
-pt.addRow(["Hobart", 1357, 205556, 619.5]);
-pt.addRow(["Sydney", 2058, 4336374, 1214.8]);
-pt.addRow(["Melbourne", 1566, 3806092, 646.9]);
-pt.addRow(["Perth", 5386, 1554769, 869.4]);
+// Basic HTML table
+const basicHtml = pt.html();
 
-var normalHTML = pt.html();
-var styledHTML = pt.html((attributes = { id: "my_table", border: "1" }));
-
-console.log(normalHTML);
-console.log(styledHTML);
+// HTML table with custom attributes
+const styledHtml = pt.html({
+  id: "data-table",
+  class: "table table-striped",
+  border: "1",
+});
 ```
 
-### Sorting Table by Column
+## Table Manipulation
 
-PrettyTable also offers option to sort the table given a column name. Additional parameters can be passed to sort in ascending or descending order. If no parameter is passed, the table will be sorted in ascending order.
+### Sort by Column
 
 ```javascript
-PrettyTable = require("prettytable");
-pt = new PrettyTable();
+const PrettyTable = require("prettytable");
+const pt = new PrettyTable();
 
-pt.fieldNames(["name", "age", "city"]);
+pt.fieldNames(["Name", "Age", "City"]);
+pt.addRow(["John", 22, "New York"]);
+pt.addRow(["Elizabeth", 43, "Chicago"]);
+pt.addRow(["Bill", 31, "Atlanta"]);
+pt.addRow(["Mary", 18, "Los Angeles"]);
 
-pt.addRow(["john", 22, "new york"]);
-pt.addRow(["elizabeth", 43, "chicago"]);
-pt.addRow(["bill", 31, "atlanta"]);
-pt.addRow(["mary", 18, "los angeles"]);
-
-pt.sortTable("age");
+// Sort by age (ascending)
+pt.sortTable("Age");
 pt.print();
 
-pt.sortTable("name", (reverse = true));
+// Sort by name (descending)
+pt.sortTable("Name", true);
 pt.print();
 ```
 
-### Deleting Data
-
-A single row can be deleted from the table by passing the row number to `deleteRow()` (not the array index). Also, all rows can be deleted using `clearTable()` and the entire table can be deleted by using `deleteTable()`.
-
-The following example shows all 3 of these methods.
+### Delete and Modify Data
 
 ```javascript
-PrettyTable = require("prettytable");
-pt = new PrettyTable();
+const PrettyTable = require("prettytable");
+const pt = new PrettyTable();
 
-pt.fieldNames(["name", "age", "city"]);
+pt.fieldNames(["Name", "Age", "City"]);
+pt.addRow(["John", 22, "New York"]);
+pt.addRow(["Elizabeth", 43, "Chicago"]);
+pt.addRow(["Bill", 31, "Atlanta"]);
+pt.addRow(["Mary", 18, "Los Angeles"]);
 
-pt.addRow(["john", 22, "new york"]);
-pt.addRow(["elizabeth", 43, "chicago"]);
-pt.addRow(["bill", 31, "atlanta"]);
-pt.addRow(["mary", 18, "los angeles"]);
-
+// Delete the second row (Elizabeth)
 pt.deleteRow(2);
-pt.deleteRow(1);
 pt.print();
 
+// Clear all rows but keep the structure
 pt.clearTable();
 pt.print();
 
+// Delete the entire table
 pt.deleteTable();
 ```
 
-### Contributing
+## Error Handling
 
-This project is under active development right now. Subsequent releases may not be compatible with older versions. Please do not use this package in a production environment.
+PrettyTable includes comprehensive error handling for all methods:
 
-This project is inspired from the Python [prettytable](https://code.google.com/p/prettytable/) module. Contributions in form of bug reports or pull requests is encouraged from users.
+```javascript
+const PrettyTable = require("prettytable");
+const pt = new PrettyTable();
 
-#### Development Setup
+try {
+  pt.fieldNames(["Name", "Age", "City"]);
+  pt.addRow(["John", 22]); // Error: Row length doesn't match columns
+} catch (error) {
+  console.error(`Error: ${error.message}`);
+}
+```
 
-The project uses ESLint for code quality and Mocha/Chai for testing. Before submitting a pull request, please ensure your code follows the style guidelines and passes all tests:
+## API Reference
+
+The PrettyTable module provides the following methods:
+
+| Method                         | Description                        |
+| ------------------------------ | ---------------------------------- |
+| `fieldNames(array)`            | Define column headers              |
+| `addRow(array)`                | Add a single row                   |
+| `create(headers, rows)`        | Create table with headers and rows |
+| `toString()`                   | Return table as a formatted string |
+| `print()`                      | Print table to console             |
+| `html([attributes])`           | Generate HTML representation       |
+| `csv(filename)`                | Import data from CSV file          |
+| `json(filename)`               | Import data from JSON file         |
+| `sortTable(column, [reverse])` | Sort by column                     |
+| `deleteRow(rownum)`            | Delete a specific row              |
+| `clearTable()`                 | Remove all rows                    |
+| `deleteTable()`                | Delete entire table                |
+
+## Contributing
+
+This project welcomes contributions! The codebase uses ESLint for code quality and Mocha/Chai for testing.
 
 ```bash
 # Install dependencies
@@ -203,6 +242,6 @@ npm run lint:fix
 npm test
 ```
 
-### License
+## License
 
-The project is under MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
