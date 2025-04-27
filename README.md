@@ -1,6 +1,7 @@
 # PrettyTable
 
 [![npm version](https://img.shields.io/npm/v/prettytable.svg)](https://www.npmjs.com/package/prettytable)
+[![Downloads](https://img.shields.io/npm/dm/prettytable.svg)](https://www.npmjs.com/package/prettytable)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
