@@ -24,6 +24,11 @@
   "engines": {
     "node": ">=12.0.0"
   },
+  "files": [
+    "prettytable.js",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "csv-parse": "^4.16.3"
   },
