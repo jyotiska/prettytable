@@ -187,7 +187,7 @@ This project is inspired from the Python [prettytable](https://code.google.com/p
 
 #### Development Setup
 
-The project uses ESLint for code quality. Before submitting a pull request, please ensure your code follows the style guidelines:
+The project uses ESLint for code quality and Mocha/Chai for testing. Before submitting a pull request, please ensure your code follows the style guidelines and passes all tests:
 
 ```bash
 # Install dependencies
@@ -198,6 +198,9 @@ npm run lint
 
 # Fix automatically fixable issues
 npm run lint:fix
+
+# Run tests
+npm test
 ```
 
 ### License
