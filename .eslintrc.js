@@ -1,0 +1,32 @@
+module.exports = {
+    env: {
+        node: true,
+        es6: true,
+    },
+    extends: 'eslint:recommended',
+    parserOptions: {
+        ecmaVersion: 2018,
+    },
+    rules: {
+        indent: ['error', 4],
+        'linebreak-style': ['error', 'unix'],
+        quotes: ['error', 'single'],
+        semi: ['error', 'always'],
+        camelcase: ['error', { properties: 'always' }],
+        curly: ['error', 'all'],
+        eqeqeq: ['error', 'smart'],
+        'no-trailing-spaces': 'error',
+        'max-len': ['error', { code: 120 }],
+        'no-unused-vars': 'error',
+        'space-before-blocks': ['error', 'always'],
+        'space-before-function-paren': ['error', 'always'],
+        'space-in-parens': ['error', 'never'],
+        'space-infix-ops': 'error',
+        'keyword-spacing': ['error', { before: true, after: true }],
+        'comma-spacing': ['error', { before: false, after: true }],
+        'comma-style': ['error', 'last'],
+        'no-multi-spaces': 'error',
+        'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
+        'no-mixed-spaces-and-tabs': 'error',
+    },
+};

@@ -1,0 +1,33 @@
+# Development files
+.git/
+.github/
+.eslintrc.js
+.eslintignore
+package-lock.json
+
+# Test files
+test/
+*.spec.js
+*.test.js
+
+# CI/CD
+.travis.yml
+.gitlab-ci.yml
+.github/workflows
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-*
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Documentation files (if you have separate doc generation)
+docs/ 
